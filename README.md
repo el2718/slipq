@@ -6,7 +6,7 @@ For the case of static boundaries, we can compute the slip-squashing factors usi
 
 This program can be downloaded with the command
 ```
-git clone https://github.com/par2solarwind
+git clone https://github.com/slipq
 ```
 
 And FastQSL2 should be downloaded first

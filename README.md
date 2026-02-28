@@ -6,12 +6,12 @@ For the case of static boundaries, we can compute the slip-squashing factors usi
 
 This program can be downloaded with the command
 ```
-git clone https://github.com/slipq
+git clone https://github.com/el2718/slipq
 ```
 
 And FastQSL2 should be downloaded first
 ```
-git clone https://github.com/FastQSL2
+git clone https://github.com/el2718/FastQSL2
 ```
 
 Please address comments and suggestions to [Dr. Chen, Jun (陈俊)](mailto:chenjun@pmo.ac.cn)

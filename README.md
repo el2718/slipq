@@ -16,8 +16,6 @@ git clone https://github.com/el2718/FastQSL2
 
 Please address comments and suggestions to [Dr. Chen, Jun (陈俊)](mailto:chenjun@pmo.ac.cn)
 
-If your markdown reader can not can not render the formulae in README\.md, please read README.html directly.
-
 -----------------------------
 [![CC BY-NC-SA 4.0][cc-by-nc-sa-shield]][cc-by-nc-sa]
 

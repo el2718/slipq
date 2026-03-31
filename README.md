@@ -40,7 +40,7 @@ This program is licensed under a [CC BY-NC-SA 4.0 License][cc-by-nc-sa].
 
 -----------------------------
 ## Products
-Both par2solarwind\.pro and par2solarwind\.py are functions, their return is a slip-squashing factor. If $t_0 < t_1$, $Q_\mathrm{sf}$ is returned; If $t_1 < t_0$, $Q_\mathrm{sb}$ is returned.
+Both slipq\.pro and slipq\.py are functions, their return is a slip-squashing factor. If $t_0 < t_1$, $Q_\mathrm{sf}$ is returned; If $t_1 < t_0$, $Q_\mathrm{sb}$ is returned.
 
 **qsl0** is the product of FastQSL 2 at for the field **bx0**, **by0**, **bz0** at $t_0$. If use slipq\.pro, it is return by the keyword **qsl0**. If use slipq\.py, $t_0 < t_1$, the results are returned by the tuple `(qsf, qsl0)`, see the example of demo_Btitov2009\.py
 

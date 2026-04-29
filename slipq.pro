@@ -45,7 +45,7 @@ slipq01=fltarr(sz(1), sz(2))
 
 if (spherical) then begin
     g_launch_t0=cos(reform(qsl0.seed[1,0,*]))
-    g_launch_t1=cos(reform(mapt0mapt1[1,*,*]))
+    g_target_t1=cos(reform(mapt0mapt1[1,*,*]))
 endif else begin
     g_launch_t0=fltarr(sz(2))+1.
     g_target_t1=fltarr(sz(1), sz(2))+1.

@@ -75,9 +75,9 @@ xreg=None, yreg=None, factor=4, delta=None, lon_delta=None, lat_delta=None, prev
     slipq_tmp=slipq01.copy()
     slipq_tmp[np.isnan(slipq_tmp)]=2.
     slipq_tmp[np.isinf(slipq_tmp)]=2.
-
-    odir='fastqsl/'
+    
     if preview: 
+        odir='fastqsl/'
         plt.imsave(odir+fname+'.png', np.log10(slipq_tmp), vmin=1., vmax=5., origin='lower', cmap='gray')
         print(odir+fname+'_magnetogram.png')
 

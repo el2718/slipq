@@ -52,7 +52,16 @@ xreg=None, yreg=None, factor=4, delta=None, lon_delta=None, lat_delta=None, prev
 
     for j in range(1,shapeB[0]-1):
         for i in range(1,shapeB[1]-1):
-            if qsl0['rboundary'][j,i] == 11 and qsl1['rboundary'][j,i] == 11:
+            if qsl0['rboundary'][j,i] == 11 and \
+               qsl0['rboundary'][j,i+1] == 11 and \
+               qsl0['rboundary'][j,i-1] == 11 and \
+               qsl0['rboundary'][j+1,i] == 11 and \
+               qsl0['rboundary'][j-1,i] == 11 and \
+               qsl1['rboundary'][j,i] == 11 and \
+               qsl1['rboundary'][j,i+1] == 11 and \
+               qsl1['rboundary'][j,i-1] == 11 and \
+               qsl1['rboundary'][j+1,i] == 11 and \
+               qsl1['rboundary'][j-1,i] == 11 :
                 slipq01[j,i]=(((mapt0mapt1[j,i+1,0]-mapt0mapt1[j,i-1,0])*g_target_t1[j,i]/g_launch_t0[j])**2+ \
                               ((mapt0mapt1[j,i+1,1]-mapt0mapt1[j,i-1,1])/g_launch_t0[j])**2                 + \
                               ((mapt0mapt1[j+1,i,0]-mapt0mapt1[j-1,i,0])*g_target_t1[j,i])**2               + \
@@ -67,6 +76,9 @@ xreg=None, yreg=None, factor=4, delta=None, lon_delta=None, lat_delta=None, prev
     slipq_tmp[np.isnan(slipq_tmp)]=2.
     slipq_tmp[np.isinf(slipq_tmp)]=2.
 
-    if preview: plt.imsave('fastqsl/'+fname+'.png', np.log10(slipq_tmp), vmin=1., vmax=5., origin='lower', cmap='gray')
+    odir='fastqsl/'
+    if preview: 
+        plt.imsave(odir+fname+'.png', np.log10(slipq_tmp), vmin=1., vmax=5., origin='lower', cmap='gray')
+        print(odir+fname+'_magnetogram.png')
 
     return slipq01, qsl0

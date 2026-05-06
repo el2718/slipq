@@ -55,7 +55,16 @@ if spherical then area=4*qsl0.lon_delta*qsl0.lat_delta else area=4*qsl0.delta^2
 
 for j=1, sz(2)-2 do begin
 for i=1, sz(1)-2 do begin
-if qsl0.rboundary[i,j] eq 11 and qsl1.rboundary[i,j] eq 11 then begin
+if qsl0.rboundary[i,j]   eq 11 and $
+   qsl0.rboundary[i+1,j] eq 11 and $
+   qsl0.rboundary[i-1,j] eq 11 and $
+   qsl0.rboundary[i,j+1] eq 11 and $
+   qsl0.rboundary[i,j-1] eq 11 and $
+   qsl1.rboundary[i,j]   eq 11 and $ 
+   qsl1.rboundary[i+1,j] eq 11 and $
+   qsl1.rboundary[i-1,j] eq 11 and $
+   qsl1.rboundary[i,j+1] eq 11 and $
+   qsl1.rboundary[i,j-1] eq 11 then begin
     slipq01[i,j]=(((mapt0mapt1[0,i+1,j]-mapt0mapt1[0,i-1,j])*g_target_t1[i,j]/g_launch_t0[j])^2.+ $
                   ((mapt0mapt1[1,i+1,j]-mapt0mapt1[1,i-1,j])/g_launch_t0[j])^2.                 + $
                   ((mapt0mapt1[0,i,j+1]-mapt0mapt1[0,i,j-1])*g_target_t1[i,j])^2.               + $
@@ -68,7 +77,10 @@ endfor
 abnormal= where(slipq01 lt 2.)
 if abnormal[0] ne -1 then slipq01[abnormal]=2.
 
-if preview then write_png, odir+fname+'.png', bytscl(alog10(slipq01), min=1., max=5.,/nan)
+if preview then begin
+    write_png, odir+fname+'.png', bytscl(alog10(slipq01), min=1., max=5.,/nan)
+    print, odir+fname+'.png'
+endif
 
 return, slipq01
 

@@ -6,12 +6,13 @@ fastqsl, bx0, by0, bz0, xa=xa, ya=ya, za=za, spherical=spherical, $
 xreg=xreg, yreg=yreg, factor=factor, delta=delta, lon_delta=lon_delta, lat_delta=lat_delta, $
 /rf, /seed, /b, qsl=qsl0, odir=odir, preview=preview, fname=fname+'_t0', /silent
 
-sz=size(qsl0.b, /dim)
+nq1=qsl0.dim[0]
+nq2=qsl0.dim[1]
 
-mapt0=fltarr(3, sz(1), sz(2))
+mapt0=fltarr(3, nq1, nq2)
 
-for j=0, sz(2)-1 do begin
-for i=0, sz(1)-1 do begin
+for j=0, nq2-1 do begin
+for i=0, nq1-1 do begin
     case qsl0.sign2d[i,j] of
 	-1: mapt0[*,i,j]=qsl0.rfs[*,i,j]
      0: mapt0[*,i,j]=qsl0.seed[*,i,j]
@@ -23,11 +24,11 @@ endfor
 fastqsl, bx1, by1, bz1, xa=xa, ya=ya, za=za, spherical=spherical, seed=mapt0, $
 /rf, /b, /targetB, qsl=qsl1, /silent
 
-mapt0mapt1=fltarr(3, sz(1), sz(2))
-Bn_target_t1=fltarr(sz(1), sz(2))
+mapt0mapt1=fltarr(3, nq1, nq2)
+Bn_target_t1=fltarr(nq1, nq2)
 
-for j=0, sz(2)-1 do begin
-for i=0, sz(1)-1 do begin
+for j=0, nq2-1 do begin
+for i=0, nq1-1 do begin
     if (qsl1.b[2,i,j] lt 0.) then begin
         mapt0mapt1[*,i,j]=qsl1.rfs[*,i,j]
         Bn_target_t1[i,j]=qsl1.Bs[2,i,j]
@@ -41,30 +42,30 @@ for i=0, sz(1)-1 do begin
 endfor
 endfor
 ;------------------------------------------------------------
-slipq01=fltarr(sz(1), sz(2)) 
+slipq01=fltarr(nq1, nq2) 
 
 if (spherical) then begin
     g_launch_t0=cos(reform(qsl0.seed[1,0,*]))
     g_target_t1=cos(reform(mapt0mapt1[1,*,*]))
 endif else begin
-    g_launch_t0=fltarr(sz(2))+1.
-    g_target_t1=fltarr(sz(1), sz(2))+1.
+    g_launch_t0=fltarr(nq2)+1.
+    g_target_t1=fltarr(nq1, nq2)+1.
 endelse
 
 if spherical then area=4*qsl0.lon_delta*qsl0.lat_delta else area=4*qsl0.delta^2
 
-for j=1, sz(2)-2 do begin
-for i=1, sz(1)-2 do begin
-if qsl0.rboundary[i,j]   eq 11 and $
-   qsl0.rboundary[i+1,j] eq 11 and $
+for j=1, nq2-2 do begin
+for i=1, nq1-2 do begin
+if qsl0.rboundary[i,j-1] eq 11 and $
    qsl0.rboundary[i-1,j] eq 11 and $
+   qsl0.rboundary[i,j]   eq 11 and $
+   qsl0.rboundary[i+1,j] eq 11 and $
    qsl0.rboundary[i,j+1] eq 11 and $
-   qsl0.rboundary[i,j-1] eq 11 and $
-   qsl1.rboundary[i,j]   eq 11 and $ 
-   qsl1.rboundary[i+1,j] eq 11 and $
+   qsl1.rboundary[i,j-1] eq 11 and $
    qsl1.rboundary[i-1,j] eq 11 and $
-   qsl1.rboundary[i,j+1] eq 11 and $
-   qsl1.rboundary[i,j-1] eq 11 then begin
+   qsl1.rboundary[i,j]   eq 11 and $
+   qsl1.rboundary[i+1,j] eq 11 and $
+   qsl1.rboundary[i,j+1] eq 11 then begin
     slipq01[i,j]=(((mapt0mapt1[0,i+1,j]-mapt0mapt1[0,i-1,j])*g_target_t1[i,j]/g_launch_t0[j])^2.+ $
                   ((mapt0mapt1[1,i+1,j]-mapt0mapt1[1,i-1,j])/g_launch_t0[j])^2.                 + $
                   ((mapt0mapt1[0,i,j+1]-mapt0mapt1[0,i,j-1])*g_target_t1[i,j])^2.               + $

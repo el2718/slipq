@@ -35,7 +35,7 @@ This program is licensed under a [CC BY-NC-SA 4.0 License][cc-by-nc-sa].
 * **bx0**, **by0**, **bz0**: the three components of magnetic field at $t_0$
 
 * **bx1**, **by1**, **bz1**: the three components of magnetic field at $t_1$
-  * If the dimensions of **bx0** is (3,nx,ny,nz), then **by0** should be the vector field at $t_1$. For example, the last two lines of the following code produce identical images
+  * If the dimensions of **bx0** is (3,nx,ny,nz), then the vector field at $t_1$ is inputted by **by0**. For example, the last two lines of the following code produce identical images
     ```
     sz3d=size(By, /dim)
     nx=sz3d[0]

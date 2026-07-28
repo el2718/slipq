@@ -18,6 +18,7 @@ xreg=None, yreg=None, factor=4, delta=None, lon_delta=None, lat_delta=None, prev
             elif qsl0['sign2d'][j,i] ==  0: mapt0[j,i,:]=qsl0['seed'][j,i,:]
             elif qsl0['sign2d'][j,i] ==  1: mapt0[j,i,:]=qsl0['rFe'][j,i,:]
 # ------------------------------------------------------------
+    if by0 is not None and bz0 is None : bx1=by0
     qsl1=fastqsl(bx1, by1, bz1, xa=xa, ya=ya, za=za, spherical=spherical, seed=mapt0, \
              rF_out=True, B_out=True, targetB_out=True, silent=True)
     

@@ -21,6 +21,7 @@ for i=0, nq1-1 do begin
 endfor
 endfor
 ;------------------------------------------------------------
+if N_PARAMS() eq 2 then bx1=by0
 fastqsl, bx1, by1, bz1, xa=xa, ya=ya, za=za, spherical=spherical, seed=mapt0, $
 /rf, /b, /targetB, qsl=qsl1, /silent
 

@@ -28,8 +28,27 @@ This program is licensed under a [CC BY-NC-SA 4.0 License][cc-by-nc-sa].
 -----------------------------
 ## Cite as
 
-* Jun Chen*, Thomas Wiegelmann, Li Feng*, Chaowei Jiang, and Rui Liu. FastQSL 2: A Comprehensive Toolkit for Magnetic Connectivity Analysis.  2026, SCIENCE CHINA Physics, Mechanics & Astronomy, submitted
+* [Jun Chen*, Thomas Wiegelmann, Li Feng*, Chaowei Jiang, and Rui Liu. (2026). FastQSL 2: A comprehensive toolkit for magnetic connectivity analysis. SCIENCE CHINA Physics, Mechanics & Astronomy, 69(8), 289611.](https://www.sciengine.com/SCPMA/doi/10.1007/s11433-025-2982-2)
 
+```bibtex
+@article{Chen2026FastQSL2,
+  title = {FastQSL 2: A comprehensive toolkit for magnetic connectivity analysis},
+  author = {{Chen}, Jun and {Wiegelmann}, Thomas and {Feng}, Li and {Jiang}, Chaowei and {Liu}, Rui},
+  year = {2026},
+  journal = {SCIENCE CHINA Physics, Mechanics, and Astronomy},
+  volume = {69},
+  number = {8},
+  pages = {289611},
+  doi = {10.1007/s11433-025-2982-2},
+  url = {http://www.sciengine.com/doi/10.1007/s11433-025-2982-2},
+  isbn = {1674-7348},
+  keywords = {solar corona, magnetic topology, open source software}
+}
+```
+
+Springer Nature: https://link.springer.com/article/10.1007/s11433-025-2982-2
+
+arXiv: https://arxiv.org/pdf/2604.16195
 -----------------------------
 ## Parameters
 * **bx0**, **by0**, **bz0**: the three components of magnetic field at $t_0$

@@ -3,10 +3,7 @@ xreg=xreg, yreg=yreg, factor=factor, delta=delta, lon_delta=lon_delta, lat_delta
 qsl0=qsl0, preview=preview, fname=fname
 ;------------------------------------------------------------
 ; inputed by slipq, Bvec0, Bvec1, ...
-if N_PARAMS() eq 2 then begin
-    bx1=by0
-    dummy=(temporary(by0))[0]
-endif
+if (size(bx0))[0] eq 4 then bx1=temporary(by0)
 ;------------------------------------------------------------
 fastqsl, bx0, by0, bz0, xa=xa, ya=ya, za=za, spherical=spherical, $
 xreg=xreg, yreg=yreg, factor=factor, delta=delta, lon_delta=lon_delta, lat_delta=lat_delta, $

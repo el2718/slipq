@@ -5,8 +5,8 @@ import matplotlib.pyplot as plt
 def slipq(bx0, by0, bz0, bx1, by1, bz1, xa=None, ya=None, za=None, spherical=False, \
 xreg=None, yreg=None, factor=4, delta=None, lon_delta=None, lat_delta=None, preview=False, fname='slipq'):
 # ------------------------------------------------------------
-# inputed by slipq(Bvec0, Bvec1, ...
-    if by0 is not None and bz0 is None: 
+# inputted by slipq(Bvec0, Bvec1, ...
+    if by0 is not None and bz0 is None:
         bx1=by0 
         by0=None 
 # ------------------------------------------------------------

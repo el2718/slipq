@@ -49,6 +49,7 @@ This program is licensed under a [CC BY-NC-SA 4.0 License][cc-by-nc-sa].
 Springer Nature: https://link.springer.com/article/10.1007/s11433-025-2982-2
 
 arXiv: https://arxiv.org/pdf/2604.16195
+
 -----------------------------
 ## Parameters
 * **bx0**, **by0**, **bz0**: the three components of magnetic field at $t_0$

@@ -35,23 +35,23 @@ This program is licensed under a [CC BY-NC-SA 4.0 License][cc-by-nc-sa].
 * **bx0**, **by0**, **bz0**: the three components of magnetic field at $t_0$
 
 * **bx1**, **by1**, **bz1**: the three components of magnetic field at $t_1$
-  *  If the dimensions of **bx0** is (3,nx,ny,nz), and then **by0** should be the vector field at $t_1$. For example, the last two lines of the following code produce identical images
-  ```
-  sz3d=size(By, /dim)
-  nx=sz3d[0]
-  ny=sz3d[1]
-  nz=sz3d[2]
-  Bvec0=fltarr(3,nx,ny,nz)
-  Bvec0[0, *, *, *]=Bx0
-  Bvec0[1, *, *, *]=By0
-  Bvec0[2, *, *, *]=Bz0
-  Bvec1=fltarr(3,nx,ny,nz)
-  Bvec1[0, *, *, *]=Bx1
-  Bvec1[1, *, *, *]=By1
-  Bvec1[2, *, *, *]=Bz1
-  slipq, Bx0, By0, Bz0, Bx1, By1, Bz1, /preview, fname='B3'
-  slipq, Bvec0, Bvec1,                 /preview, fname='Bvec'
-  ```
+  * If the dimensions of **bx0** is (3,nx,ny,nz), and then **by0** should be the vector field at $t_1$. For example, the last two lines of the following code produce identical images
+    ```
+    sz3d=size(By, /dim)
+    nx=sz3d[0]
+    ny=sz3d[1]
+    nz=sz3d[2]
+    Bvec0=fltarr(3,nx,ny,nz)
+    Bvec0[0, *, *, *]=Bx0
+    Bvec0[1, *, *, *]=By0
+    Bvec0[2, *, *, *]=Bz0
+    Bvec1=fltarr(3,nx,ny,nz)
+    Bvec1[0, *, *, *]=Bx1
+    Bvec1[1, *, *, *]=By1
+    Bvec1[2, *, *, *]=Bz1
+    slipq, Bx0, By0, Bz0, Bx1, By1, Bz1, /preview, fname='B3'
+    slipq, Bvec0, Bvec1,                 /preview, fname='Bvec'
+    ```
 
 * **xa**, **ya**, **za**, **spherical**, **xreg**, **yreg**, **factor**, **lon_delta**, **lat_delta**, **preview**, **fname** are the same as those in FastQSL2
 

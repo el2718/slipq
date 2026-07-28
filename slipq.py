@@ -5,6 +5,11 @@ import matplotlib.pyplot as plt
 def slipq(bx0, by0, bz0, bx1, by1, bz1, xa=None, ya=None, za=None, spherical=False, \
 xreg=None, yreg=None, factor=4, delta=None, lon_delta=None, lat_delta=None, preview=False, fname='slipq'):
 # ------------------------------------------------------------
+# inputed by slipq(Bvec0, Bvec1, ...
+    if by0 is not None and bz0 is None: 
+        bx1=by0 
+        by0=None 
+# ------------------------------------------------------------
     qsl0=fastqsl(bx0, by0, bz0, xa=xa, ya=ya, za=za, spherical=spherical, \
     xreg=xreg, yreg=yreg, factor=factor, delta=delta, lon_delta=lon_delta, lat_delta=lat_delta, \
     rF_out=True, seed=True, B_out=True, silent=True, fname=fname+'_t0', preview=preview)
@@ -18,7 +23,8 @@ xreg=None, yreg=None, factor=4, delta=None, lon_delta=None, lat_delta=None, prev
             elif qsl0['sign2d'][j,i] ==  0: mapt0[j,i,:]=qsl0['seed'][j,i,:]
             elif qsl0['sign2d'][j,i] ==  1: mapt0[j,i,:]=qsl0['rFe'][j,i,:]
 # ------------------------------------------------------------
-    if by0 is not None and bz0 is None : bx1=by0
+
+
     qsl1=fastqsl(bx1, by1, bz1, xa=xa, ya=ya, za=za, spherical=spherical, seed=mapt0, \
              rF_out=True, B_out=True, targetB_out=True, silent=True)
     

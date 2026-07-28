@@ -2,6 +2,12 @@ function slipq, bx0, by0, bz0, bx1, by1, bz1, xa=xa, ya=ya, za=za, spherical=sph
 xreg=xreg, yreg=yreg, factor=factor, delta=delta, lon_delta=lon_delta, lat_delta=lat_delta, $
 qsl0=qsl0, preview=preview, fname=fname
 ;------------------------------------------------------------
+; inputed by slipq, Bvec0, Bvec1, ...
+if N_PARAMS() eq 2 then begin
+    bx1=by0
+    dummy=(temporary(by0))[0]
+endif
+;------------------------------------------------------------
 fastqsl, bx0, by0, bz0, xa=xa, ya=ya, za=za, spherical=spherical, $
 xreg=xreg, yreg=yreg, factor=factor, delta=delta, lon_delta=lon_delta, lat_delta=lat_delta, $
 /rf, /seed, /b, qsl=qsl0, odir=odir, preview=preview, fname=fname+'_t0', /silent
@@ -21,7 +27,6 @@ for i=0, nq1-1 do begin
 endfor
 endfor
 ;------------------------------------------------------------
-if N_PARAMS() eq 2 then bx1=by0
 fastqsl, bx1, by1, bz1, xa=xa, ya=ya, za=za, spherical=spherical, seed=mapt0, $
 /rf, /b, /targetB, qsl=qsl1, /silent
 

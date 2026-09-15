@@ -80,12 +80,11 @@ silent=False, preview=False, fname='slipq'):
 
     slipq01[slipq01 <=2.]=2.
 
-    slipq_tmp=slipq01.copy()
-    slipq_tmp[np.isnan(slipq_tmp)]=2.
-    slipq_tmp[np.isinf(slipq_tmp)]=2.
-
     if preview: 
         odir='fastqsl/'
+        slipq_tmp=slipq01.copy()
+        slipq_tmp[np.isnan(slipq_tmp)]=2.
+        slipq_tmp[np.isinf(slipq_tmp)]=2.
         plt.imsave(odir+fname+'.png', np.log10(slipq_tmp), vmin=1., vmax=5., origin='lower', cmap='gray')
         if not silent: print(odir+fname+'.png')
 

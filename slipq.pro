@@ -1,13 +1,14 @@
 function slipq, bx0, by0, bz0, bx1, by1, bz1, xa=xa, ya=ya, za=za, spherical=spherical, $
 xreg=xreg, yreg=yreg, factor=factor, delta=delta, lon_delta=lon_delta, lat_delta=lat_delta, $
-qsl0=qsl0, preview=preview, fname=fname
+qsl0=qsl0, preview=preview, fname=fname, silent=silent
 ;------------------------------------------------------------
 ; inputted by slipq, Bvec0, Bvec1, ...
 if (size(bx0))[0] eq 4 then bx1=temporary(by0)
+if ~keyword_set(fname) then fname='slipq'
 ;------------------------------------------------------------
 fastqsl, bx0, by0, bz0, xa=xa, ya=ya, za=za, spherical=spherical, $
 xreg=xreg, yreg=yreg, factor=factor, delta=delta, lon_delta=lon_delta, lat_delta=lat_delta, $
-/rf, /seed, /b, qsl=qsl0, odir=odir, preview=preview, fname=fname+'_t0', /silent
+/rf, /seed, /b, qsl=qsl0, odir=odir, preview=preview, fname=fname+'_t0', silent=silent
 
 nq1=qsl0.dim[0]
 nq2=qsl0.dim[1]
@@ -68,7 +69,8 @@ if qsl0.rboundary[i,j-1] eq 11 and $
    qsl1.rboundary[i-1,j] eq 11 and $
    qsl1.rboundary[i,j]   eq 11 and $
    qsl1.rboundary[i+1,j] eq 11 and $
-   qsl1.rboundary[i,j+1] eq 11 then begin
+   qsl1.rboundary[i,j+1] eq 11 and $
+   qsl0.b[2,i,j] ne 0. then begin
     slipq01[i,j]=(((mapt0mapt1[0,i+1,j]-mapt0mapt1[0,i-1,j])*g_target_t1[i,j]/g_launch_t0[j])^2.+ $
                   ((mapt0mapt1[1,i+1,j]-mapt0mapt1[1,i-1,j])/g_launch_t0[j])^2.                 + $
                   ((mapt0mapt1[0,i,j+1]-mapt0mapt1[0,i,j-1])*g_target_t1[i,j])^2.               + $
@@ -83,7 +85,7 @@ if abnormal[0] ne -1 then slipq01[abnormal]=2.
 
 if preview then begin
     write_png, odir+fname+'.png', bytscl(alog10(slipq01), min=1., max=5.,/nan)
-    print, odir+fname+'.png'
+    if ~keyword_set(silent) then print, odir+fname+'.png'
 endif
 
 return, slipq01

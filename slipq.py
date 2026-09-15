@@ -3,16 +3,17 @@ from fastqsl import fastqsl
 import matplotlib.pyplot as plt
 
 def slipq(bx0, by0, bz0, bx1, by1, bz1, xa=None, ya=None, za=None, spherical=False, \
-xreg=None, yreg=None, factor=4, delta=None, lon_delta=None, lat_delta=None, preview=False, fname='slipq'):
+xreg=None, yreg=None, factor=4, delta=None, lon_delta=None, lat_delta=None, 
+silent=False, preview=False, fname='slipq'):
 # ------------------------------------------------------------
 # inputted by slipq(Bvec0, Bvec1, ...
     if by0 is not None and bz0 is None:
-        bx1=by0 
-        by0=None 
+        bx1=by0
+        by0=None
 # ------------------------------------------------------------
     qsl0=fastqsl(bx0, by0, bz0, xa=xa, ya=ya, za=za, spherical=spherical, \
     xreg=xreg, yreg=yreg, factor=factor, delta=delta, lon_delta=lon_delta, lat_delta=lat_delta, \
-    rF_out=True, seed=True, B_out=True, silent=True, fname=fname+'_t0', preview=preview)
+    rF_out=True, seed=True, B_out=True, silent=silent, fname=fname+'_t0', preview=preview)
 
     nq2, nq1=qsl0['dim']
 
@@ -67,7 +68,8 @@ xreg=None, yreg=None, factor=4, delta=None, lon_delta=None, lat_delta=None, prev
                qsl1['rboundary'][j,i-1] == 11 and \
                qsl1['rboundary'][j,i]   == 11 and \
                qsl1['rboundary'][j,i+1] == 11 and \
-               qsl1['rboundary'][j+1,i] == 11 :
+               qsl1['rboundary'][j+1,i] == 11 and \
+               qsl0['B'][j,i,2] != 0. :
                 slipq01[j,i]=(((mapt0mapt1[j,i+1,0]-mapt0mapt1[j,i-1,0])*g_target_t1[j,i]/g_launch_t0[j])**2+ \
                               ((mapt0mapt1[j,i+1,1]-mapt0mapt1[j,i-1,1])/g_launch_t0[j])**2                 + \
                               ((mapt0mapt1[j+1,i,0]-mapt0mapt1[j-1,i,0])*g_target_t1[j,i])**2               + \
@@ -85,6 +87,6 @@ xreg=None, yreg=None, factor=4, delta=None, lon_delta=None, lat_delta=None, prev
     if preview: 
         odir='fastqsl/'
         plt.imsave(odir+fname+'.png', np.log10(slipq_tmp), vmin=1., vmax=5., origin='lower', cmap='gray')
-        print(odir+fname+'_magnetogram.png')
+        if not silent: print(odir+fname+'.png')
 
     return slipq01, qsl0

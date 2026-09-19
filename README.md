@@ -97,3 +97,4 @@ python3 demo_Btitov2009.py
 ## History
 * Feb 26, 2026 Jun Chen, version 1.0
 * Jul 28, 2026 Jun Chen, support the input format as `slipq, Bvec0, Bvec1, ...`
+* Sep 20, 2026 Jun Chen, accommodate the change in fastqsl.py returning **qsl** as an object instead of a dictionary

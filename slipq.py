@@ -15,14 +15,14 @@ silent=False, preview=False, fname='slipq'):
     xreg=xreg, yreg=yreg, factor=factor, delta=delta, lon_delta=lon_delta, lat_delta=lat_delta, \
     rF_out=True, seed=True, B_out=True, silent=silent, fname=fname+'_t0', preview=preview)
 
-    nq2, nq1=qsl0['dim']
+    nq2, nq1=qsl0.dim
 
     mapt0=np.zeros((nq2, nq1, 3),'f4')
     for j in range(nq2):
         for i in range(nq1):
-            if   qsl0['sign2d'][j,i] == -1: mapt0[j,i,:]=qsl0['rFs'][j,i,:]
-            elif qsl0['sign2d'][j,i] ==  0: mapt0[j,i,:]=qsl0['seed'][j,i,:]
-            elif qsl0['sign2d'][j,i] ==  1: mapt0[j,i,:]=qsl0['rFe'][j,i,:]
+            if   qsl0.sign2d[j,i] == -1: mapt0[j,i,:]=qsl0.rFs[j,i,:]
+            elif qsl0.sign2d[j,i] ==  0: mapt0[j,i,:]=qsl0.seed[j,i,:]
+            elif qsl0.sign2d[j,i] ==  1: mapt0[j,i,:]=qsl0.rFe[j,i,:]
 # ------------------------------------------------------------
 
 
@@ -33,15 +33,15 @@ silent=False, preview=False, fname='slipq'):
     Bn_target_t1=np.zeros((nq2, nq1),'f4')
     for j in range(nq2):
         for i in range(nq1):
-            if   qsl1['B'][j,i,2] < 0.:
-                mapt0mapt1[j,i,:]=qsl1['rFs'][j,i,:]
-                Bn_target_t1[j,i]=qsl1['Bs'][j,i,2]
-            elif qsl1['B'][j,i,2] == 0.:
-                mapt0mapt1[j,i,:]=qsl1['seed'][j,i,:]
-                Bn_target_t1[j,i]=qsl1['B'][j,i,2]
-            elif qsl1['B'][j,i,2] > 0:
-                mapt0mapt1[j,i,:]=qsl1['rFe'][j,i,:]
-                Bn_target_t1[j,i]=qsl1['Be'][j,i,2]
+            if   qsl1.B[j,i,2] < 0.:
+                mapt0mapt1[j,i,:]=qsl1.rFs[j,i,:]
+                Bn_target_t1[j,i]=qsl1.Bs[j,i,2]
+            elif qsl1.B[j,i,2] == 0.:
+                mapt0mapt1[j,i,:]=qsl1.seed[j,i,:]
+                Bn_target_t1[j,i]=qsl1.B[j,i,2]
+            elif qsl1.B[j,i,2] > 0:
+                mapt0mapt1[j,i,:]=qsl1.rFe[j,i,:]
+                Bn_target_t1[j,i]=qsl1.Be[j,i,2]
 # ------------------------------------------------------------
     slipq01=np.zeros((nq2, nq1),'f4')
 
@@ -53,28 +53,28 @@ silent=False, preview=False, fname='slipq'):
         g_target_t1=np.zeros((nq2, nq1),'f4')+1.
 
     if spherical:
-        area=4*qsl0['lon_delta']*qsl0['lat_delta']
+        area=4*qsl0.lon_delta*qsl0.lat_delta
     else:
-        area=4*qsl0['delta']**2.
+        area=4*qsl0.delta**2.
 
     for j in range(1,nq2-1):
         for i in range(1,nq1-1):
-            if qsl0['rboundary'][j-1,i] == 11 and \
-               qsl0['rboundary'][j,i-1] == 11 and \
-               qsl0['rboundary'][j,i]   == 11 and \
-               qsl0['rboundary'][j,i+1] == 11 and \
-               qsl0['rboundary'][j+1,i] == 11 and \
-               qsl1['rboundary'][j-1,i] == 11 and \
-               qsl1['rboundary'][j,i-1] == 11 and \
-               qsl1['rboundary'][j,i]   == 11 and \
-               qsl1['rboundary'][j,i+1] == 11 and \
-               qsl1['rboundary'][j+1,i] == 11 and \
-               qsl0['B'][j,i,2] != 0. :
+            if qsl0.rboundary[j-1,i] == 11 and \
+               qsl0.rboundary[j,i-1] == 11 and \
+               qsl0.rboundary[j,i]   == 11 and \
+               qsl0.rboundary[j,i+1] == 11 and \
+               qsl0.rboundary[j+1,i] == 11 and \
+               qsl1.rboundary[j-1,i] == 11 and \
+               qsl1.rboundary[j,i-1] == 11 and \
+               qsl1.rboundary[j,i]   == 11 and \
+               qsl1.rboundary[j,i+1] == 11 and \
+               qsl1.rboundary[j+1,i] == 11 and \
+               qsl0.B[j,i,2] != 0. :
                 slipq01[j,i]=(((mapt0mapt1[j,i+1,0]-mapt0mapt1[j,i-1,0])*g_target_t1[j,i]/g_launch_t0[j])**2+ \
                               ((mapt0mapt1[j,i+1,1]-mapt0mapt1[j,i-1,1])/g_launch_t0[j])**2                 + \
                               ((mapt0mapt1[j+1,i,0]-mapt0mapt1[j-1,i,0])*g_target_t1[j,i])**2               + \
                                (mapt0mapt1[j+1,i,1]-mapt0mapt1[j-1,i,1])**2) \
-                             /area*np.abs(Bn_target_t1[j,i]/qsl0['B'][j,i,2])
+                             /area*np.abs(Bn_target_t1[j,i]/qsl0.B[j,i,2])
             else: slipq01[j,i]=np.nan
     
 

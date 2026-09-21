@@ -29,4 +29,4 @@ qsf, qsl8 =slipq(bx8, by, bz, bx13, by, bz, xa=xa, ya=ya, za=za, delta=0.05, \
 xreg=[-15,15], yreg=[-12,12], fname='Btitov2009_qsf', preview=True)
 
 qsb, qsl13=slipq(bx13, by, bz, bx8, by, bz, xa=xa, ya=ya, za=za, delta=0.05, \
-xreg=[-15,15], yreg=[-15,15], fname='Btitov2009_qsb', preview=True)
+xreg=[-15,15], yreg=[-12,12], fname='Btitov2009_qsb', preview=True)

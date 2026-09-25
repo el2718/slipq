@@ -81,7 +81,12 @@ do i=0, n_lon-1
     endif
 enddo
 enddo
-!----------------------------------------------------------------------------
+!------------------------------------------------------------
+! https://www.openmp.org/spec-html/5.0/openmpsu112.html
+if (nthreads .gt. OMP_GET_NUM_PROCS()) nthreads=OMP_GET_NUM_PROCS()
+if (nthreads .eq. 0) nthreads=OMP_GET_NUM_PROCS()-2
+CALL OMP_set_num_threads(nthreads)
+
 !$OMP PARALLEL DO PRIVATE(i,j,k), schedule(DYNAMIC)
 do i=0, n_lon-1
 do j=0, n_lat-1

@@ -84,11 +84,11 @@ Both slipq\.pro and slipq\.py are functions, the first return is a slip-squashin
 -----------------------------
 ## Demos
 
-### If use fastqsl\.pro
+### If use slipq\.pro
 ```idl
 IDL> .r demo_Btitov2009.pro
 ```
-### If use fastqsl\.py
+### If use slipq\.py
 ```python
 python3 demo_Btitov2009.py
 ```

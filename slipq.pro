@@ -72,8 +72,8 @@ if qsl0.rboundary[i,j-1] eq 11 and $
    qsl1.rboundary[i,j+1] eq 11 and $
    qsl0.b[2,i,j] ne 0. then begin
     if spherical then begin
-        diff_i_0=(((mapt0mapt1[0,i+1,j]-mapt0mapt1[0,i-1,j]+!pi) mod two_pi)-!pi)/(2*qsl0.lon_delta)
-        diff_j_0=(((mapt0mapt1[0,i,j+1]-mapt0mapt1[0,i,j-1]+!pi) mod two_pi)-!pi)/(2*qsl0.lat_delta)
+        diff_i_0=((((mapt0mapt1[0,i+1,j]-mapt0mapt1[0,i-1,j]+!pi) mod two_pi) mod two_pi)-!pi)/(2*qsl0.lon_delta)
+        diff_j_0=((((mapt0mapt1[0,i,j+1]-mapt0mapt1[0,i,j-1]+!pi) mod two_pi) mod two_pi)-!pi)/(2*qsl0.lat_delta)
         diff_i_1=(mapt0mapt1[1,i+1,j]-mapt0mapt1[1,i-1,j])/(2*qsl0.lon_delta)
         diff_j_1=(mapt0mapt1[1,i,j+1]-mapt0mapt1[1,i,j-1])/(2*qsl0.lat_delta)
     endif else begin

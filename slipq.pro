@@ -87,7 +87,7 @@ if qsl0.rboundary[i,j-1] eq 11 and $
                   (diff_i_1/g_launch_t0[j])^2.                 + $
                   (diff_j_0*g_target_t1[i,j])^2.               + $
                   (diff_j_1)^2.) $
-                 /abs(Bn_target_t1[i,j]/qsl0.b[2,i,j])
+                 *abs(Bn_target_t1[i,j]/qsl0.b[2,i,j])
 
 endif else slipq01[i,j]= !values.f_nan
 endfor

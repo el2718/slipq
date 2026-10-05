@@ -79,12 +79,12 @@ def slipq(bx0=None, by0=None, bz0=None, bx1=None, by1=None, bz1=None, *, \
                     diff_j_0=(mapt0mapt1[j+1,i,0]-mapt0mapt1[j-1,i,0])/(2*qsl0.delta)
                     diff_i_1=(mapt0mapt1[j,i+1,1]-mapt0mapt1[j,i-1,1])/(2*qsl0.delta)
                     diff_j_1=(mapt0mapt1[j+1,i,1]-mapt0mapt1[j-1,i,1])/(2*qsl0.delta)
-                    
+
                 slipq01[j,i]=((diff_i_0*g_target_t1[j,i]/g_launch_t0[j])**2+ \
                               (diff_i_1/g_launch_t0[j])**2                 + \
                               (diff_j_0*g_target_t1[j,i])**2               + \
                                diff_j_1**2) \
-                             /np.abs(Bn_target_t1[j,i]/qsl0.B[j,i,2])
+                             *np.abs(Bn_target_t1[j,i]/qsl0.B[j,i,2])
             else: slipq01[j,i]=np.nan
     
 

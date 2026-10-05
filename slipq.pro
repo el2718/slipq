@@ -56,7 +56,10 @@ endif else begin
     g_target_t1=fltarr(nq1, nq2)+1.
 endelse
 
-if spherical then area=4*qsl0.lon_delta*qsl0.lat_delta else area=4*qsl0.delta^2
+if spherical then begin
+    two_pi=!pi*2.
+    area2=(4*qsl0.lon_delta*qsl0.lat_delta)^2 
+endif else area2=(4*qsl0.delta^2)^2
 
 for j=1, nq2-2 do begin
 for i=1, nq1-2 do begin
@@ -71,11 +74,18 @@ if qsl0.rboundary[i,j-1] eq 11 and $
    qsl1.rboundary[i+1,j] eq 11 and $
    qsl1.rboundary[i,j+1] eq 11 and $
    qsl0.b[2,i,j] ne 0. then begin
-    slipq01[i,j]=(((mapt0mapt1[0,i+1,j]-mapt0mapt1[0,i-1,j])*g_target_t1[i,j]/g_launch_t0[j])^2.+ $
+    if spherical then begin
+        diff_i_0=((mapt0mapt1[0,i+1,j]-mapt0mapt1[0,i-1,j]-np.pi) mod two_pi)+np.pi
+        diff_j_0=((mapt0mapt1[0,i,j+1]-mapt0mapt1[0,i,j-1]-np.pi) mod two_pi)+np.pi
+    endif else begin
+        diff_i_0=mapt0mapt1[0,i+1,j]-mapt0mapt1[0,i-1,j]
+        diff_j_0=mapt0mapt1[0,i,j+1]-mapt0mapt1[0,i,j-1]
+    endelse
+    slipq01[i,j]=((diff_i_0*g_target_t1[i,j]/g_launch_t0[j])^2.+ $
                   ((mapt0mapt1[1,i+1,j]-mapt0mapt1[1,i-1,j])/g_launch_t0[j])^2.                 + $
-                  ((mapt0mapt1[0,i,j+1]-mapt0mapt1[0,i,j-1])*g_target_t1[i,j])^2.               + $
+                  (diff_j_0*g_target_t1[i,j])^2.               + $
                    (mapt0mapt1[1,i,j+1]-mapt0mapt1[1,i,j-1])^2.) $
-                 /area*abs(Bn_target_t1[i,j]/qsl0.b[2,i,j])
+                 /area2*abs(Bn_target_t1[i,j]/qsl0.b[2,i,j])
 endif else slipq01[i,j]= !values.f_nan
 endfor
 endfor

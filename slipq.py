@@ -4,8 +4,8 @@ import matplotlib.pyplot as plt
 
 def slipq(bx0=None, by0=None, bz0=None, bx1=None, by1=None, bz1=None, *, \
           xa=None, ya=None, za=None, spherical=False, \
-xreg=None, yreg=None, factor=4, delta=None, lon_delta=None, lat_delta=None, 
-silent=False, preview=False, fname='slipq'):
+          xreg=None, yreg=None, factor=4, delta=None, lon_delta=None, lat_delta=None, 
+          silent=False, preview=False, fname='slipq'):
 # ------------------------------------------------------------
 # inputted by slipq(Bvec0, Bvec1, ...
     if by0 is not None and bz0 is None:
@@ -54,10 +54,12 @@ silent=False, preview=False, fname='slipq'):
         g_target_t1=np.zeros((nq2, nq1),'f4')+1.
 
     if spherical:
-        area=4*qsl0.lon_delta*qsl0.lat_delta
+        two_pi=np.pi*2
+        area2=(4*qsl0.lon_delta*qsl0.lat_delta)**2
     else:
-        area=4*qsl0.delta**2.
+        area2=(4*qsl0.delta**2.)**2
 
+    
     for j in range(1,nq2-1):
         for i in range(1,nq1-1):
             if qsl0.rboundary[j-1,i] == 11 and \
@@ -71,11 +73,18 @@ silent=False, preview=False, fname='slipq'):
                qsl1.rboundary[j,i+1] == 11 and \
                qsl1.rboundary[j+1,i] == 11 and \
                qsl0.B[j,i,2] != 0. :
-                slipq01[j,i]=(((mapt0mapt1[j,i+1,0]-mapt0mapt1[j,i-1,0])*g_target_t1[j,i]/g_launch_t0[j])**2+ \
+
+                if spherical:
+                    diff_i_0=np.mod(mapt0mapt1[j,i+1,0]-mapt0mapt1[j,i-1,0]-np.pi, two_pi)+np.pi
+                    diff_j_0=np.mod(mapt0mapt1[j+1,i,0]-mapt0mapt1[j-1,i,0]-np.pi, two_pi)+np.pi
+                else:
+                    diff_i_0=mapt0mapt1[j,i+1,0]-mapt0mapt1[j,i-1,0]
+                    diff_j_0=mapt0mapt1[j+1,i,0]-mapt0mapt1[j-1,i,0]
+                slipq01[j,i]=(((diff_i_0)*g_target_t1[j,i]/g_launch_t0[j])**2+ \
                               ((mapt0mapt1[j,i+1,1]-mapt0mapt1[j,i-1,1])/g_launch_t0[j])**2                 + \
-                              ((mapt0mapt1[j+1,i,0]-mapt0mapt1[j-1,i,0])*g_target_t1[j,i])**2               + \
+                              ((diff_j_0)*g_target_t1[j,i])**2               + \
                                (mapt0mapt1[j+1,i,1]-mapt0mapt1[j-1,i,1])**2) \
-                             /area*np.abs(Bn_target_t1[j,i]/qsl0.B[j,i,2])
+                             /area2*np.abs(Bn_target_t1[j,i]/qsl0.B[j,i,2])
             else: slipq01[j,i]=np.nan
     
 

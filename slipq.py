@@ -2,7 +2,8 @@ import numpy as np
 from fastqsl import fastqsl
 import matplotlib.pyplot as plt
 
-def slipq(bx0, by0, bz0, bx1, by1, bz1, xa=None, ya=None, za=None, spherical=False, \
+def slipq(bx0=None, by0=None, bz0=None, bx1=None, by1=None, bz1=None, *, \
+          xa=None, ya=None, za=None, spherical=False, \
 xreg=None, yreg=None, factor=4, delta=None, lon_delta=None, lat_delta=None, 
 silent=False, preview=False, fname='slipq'):
 # ------------------------------------------------------------

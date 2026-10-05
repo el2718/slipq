@@ -56,10 +56,7 @@ endif else begin
     g_target_t1=fltarr(nq1, nq2)+1.
 endelse
 
-if spherical then begin
-    two_pi=!pi*2.
-    area2=(4*qsl0.lon_delta*qsl0.lat_delta)^2 
-endif else area2=(4*qsl0.delta^2)^2
+if spherical then two_pi=!pi*2.
 
 for j=1, nq2-2 do begin
 for i=1, nq1-2 do begin
@@ -75,17 +72,23 @@ if qsl0.rboundary[i,j-1] eq 11 and $
    qsl1.rboundary[i,j+1] eq 11 and $
    qsl0.b[2,i,j] ne 0. then begin
     if spherical then begin
-        diff_i_0=((mapt0mapt1[0,i+1,j]-mapt0mapt1[0,i-1,j]-np.pi) mod two_pi)+np.pi
-        diff_j_0=((mapt0mapt1[0,i,j+1]-mapt0mapt1[0,i,j-1]-np.pi) mod two_pi)+np.pi
+        diff_i_0=(((mapt0mapt1[0,i+1,j]-mapt0mapt1[0,i-1,j]+!pi) mod two_pi)-!pi)/(2*qsl0.lon_delta)
+        diff_j_0=(((mapt0mapt1[0,i,j+1]-mapt0mapt1[0,i,j-1]+!pi) mod two_pi)-!pi)/(2*qsl0.lon_delta)
+        diff_i_1=(((mapt0mapt1[0,i+1,j]-mapt0mapt1[0,i-1,j]+!pi) mod two_pi)-!pi)/(2*qsl0.lat_delta)
+        diff_j_1=(((mapt0mapt1[0,i,j+1]-mapt0mapt1[0,i,j-1]+!pi) mod two_pi)-!pi)/(2*qsl0.lat_delta)
     endif else begin
-        diff_i_0=mapt0mapt1[0,i+1,j]-mapt0mapt1[0,i-1,j]
-        diff_j_0=mapt0mapt1[0,i,j+1]-mapt0mapt1[0,i,j-1]
+        diff_i_0=(mapt0mapt1[0,i+1,j]-mapt0mapt1[0,i-1,j])/(2*qsl0.delta)
+        diff_j_0=(mapt0mapt1[0,i,j+1]-mapt0mapt1[0,i,j-1])/(2*qsl0.delta)
+        diff_i_1=(mapt0mapt1[1,i+1,j]-mapt0mapt1[1,i-1,j])/(2*qsl0.delta)
+        diff_j_1=(mapt0mapt1[1,i,j+1]-mapt0mapt1[1,i,j-1])/(2*qsl0.delta)
     endelse
+
     slipq01[i,j]=((diff_i_0*g_target_t1[i,j]/g_launch_t0[j])^2.+ $
-                  ((mapt0mapt1[1,i+1,j]-mapt0mapt1[1,i-1,j])/g_launch_t0[j])^2.                 + $
+                  (diff_i_1/g_launch_t0[j])^2.                 + $
                   (diff_j_0*g_target_t1[i,j])^2.               + $
-                   (mapt0mapt1[1,i,j+1]-mapt0mapt1[1,i,j-1])^2.) $
-                 /area2*abs(Bn_target_t1[i,j]/qsl0.b[2,i,j])
+                  (diff_j_1)^2.) $
+                 /abs(Bn_target_t1[i,j]/qsl0.b[2,i,j])
+
 endif else slipq01[i,j]= !values.f_nan
 endfor
 endfor
